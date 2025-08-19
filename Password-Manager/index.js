@@ -81,6 +81,26 @@ app.put('/update-password', async (req, res) => {
     }
 })
 
+//Delete -> Remove User (Delete by email)
+app.delete('/delete', async (req, res) => {
+    try {
+        const { email } = req.body;
+
+        const deletedUser = await User.findOneAndDelete({ email })
+        if (!deletedUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.json({ message: "User deleted successfully" });
+
+    } catch (error) {
+        res.status(500).json({ message: " error", error: error.message })
+
+
+    }
+})
+
+
 
 
 
